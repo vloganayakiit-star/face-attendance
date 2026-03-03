@@ -39,6 +39,18 @@ def init_db():
         student_id TEXT, name TEXT, department TEXT, year TEXT,
         date TEXT, time TEXT, confidence REAL, session TEXT, subject TEXT)""")
     conn.commit()
+    # Add missing columns for older database versions
+    for col, coltype in [("roll_no","TEXT"),("email","TEXT"),("phone","TEXT"),("subject","TEXT")]:
+        try:
+            conn.execute("ALTER TABLE students ADD COLUMN "+col+" "+coltype)
+            conn.commit()
+        except Exception:
+            pass
+        try:
+            conn.execute("ALTER TABLE attendance ADD COLUMN "+col+" "+coltype)
+            conn.commit()
+        except Exception:
+            pass
     conn.close()
 
 def get_students():
@@ -53,6 +65,12 @@ def get_students():
 def get_attendance(date=None):
     date = date or datetime.now().strftime("%Y-%m-%d")
     conn = sqlite3.connect(DB)
+    # Add subject column if it does not exist (handles old databases)
+    try:
+        conn.execute("ALTER TABLE attendance ADD COLUMN subject TEXT DEFAULT 'General'")
+        conn.commit()
+    except Exception:
+        pass
     rows = conn.execute(
         "SELECT student_id,name,department,year,time,confidence,session,subject "
         "FROM attendance WHERE date=? ORDER BY time DESC",(date,)
