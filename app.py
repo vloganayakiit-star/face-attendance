@@ -670,30 +670,38 @@ elif selected == "Student Management":
         st.markdown("### Add New Student")
         st.info("Fill in the student details below. Student ID must be unique.")
 
-        with st.form("add_form", clear_on_submit=True):
+        with st.form("add_form"):
             col1,col2 = st.columns(2)
             with col1:
-                f_id    = st.text_input("Student ID *",   placeholder="e.g. KA2024011")
-                f_name  = st.text_input("Full Name *",    placeholder="e.g. Priya Krishnan")
-                f_roll  = st.text_input("Roll Number",    placeholder="e.g. 22IT011")
+                f_id    = st.text_input("Student ID *",   placeholder="e.g. KA2024011",  key="add_id")
+                f_name  = st.text_input("Full Name *",    placeholder="e.g. Priya Krishnan", key="add_name")
+                f_roll  = st.text_input("Roll Number",    placeholder="e.g. 22IT011",    key="add_roll")
             with col2:
                 f_dept  = st.selectbox("Department *",[
                     "Information Technology","Computer Science",
                     "Electronics","Mechanical","Civil","Mathematics"
-                ])
-                f_year  = st.selectbox("Year *",["I Year","II Year","III Year","IV Year"])
-                f_email = st.text_input("Email",          placeholder="student@email.com")
-            f_phone = st.text_input("Phone Number",       placeholder="e.g. 9876543210")
+                ], key="add_dept")
+                f_year  = st.selectbox("Year *",["I Year","II Year","III Year","IV Year"], key="add_year")
+                f_email = st.text_input("Email",          placeholder="student@email.com", key="add_email")
+            f_phone = st.text_input("Phone Number",       placeholder="e.g. 9876543210", key="add_phone")
 
             submitted = st.form_submit_button("➕ Add Student", type="primary", use_container_width=True)
             if submitted:
-                if not f_id.strip() or not f_name.strip():
+                # Read from session state to avoid clear_on_submit race condition
+                sid   = st.session_state.get("add_id", "").strip()
+                sname = st.session_state.get("add_name", "").strip()
+                sdept = st.session_state.get("add_dept", "Information Technology")
+                syear = st.session_state.get("add_year", "I Year")
+                sroll = st.session_state.get("add_roll", "").strip()
+                semail= st.session_state.get("add_email", "").strip()
+                sphone= st.session_state.get("add_phone", "").strip()
+                if not sid or not sname:
                     st.error("⚠️ Student ID and Full Name are required fields.")
                 else:
-                    ok, msg = add_student(f_id, f_name, f_dept, f_year, f_roll, f_email, f_phone)
+                    ok, msg = add_student(sid, sname, sdept, syear, sroll, semail, sphone)
                     if ok:
-                        st.success("✅ "+f_name.strip()+" ("+f_id.strip()+") added successfully!")
-                        add_log("New student added: "+f_name.strip()+" ("+f_id.strip()+")","SUCCESS")
+                        st.success("✅ "+sname+" ("+sid+") added successfully!")
+                        add_log("New student added: "+sname+" ("+sid+")","SUCCESS")
                         st.rerun()
                     else:
                         st.error("❌ "+msg)
