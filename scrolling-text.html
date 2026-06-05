@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrolling Text Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        
+        .scroll-container {
+            width: 100%;
+            height: 300px;
+            overflow-y: scroll;
+            border: 2px solid #007bff;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        
+        .text-content {
+            line-height: 1.8;
+            color: #555;
+        }
+        
+        .text-content p {
+            margin: 15px 0;
+        }
+        
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .scroll-top-btn {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .scroll-top-btn:hover {
+            background-color: #218838;
+        }
+        
+        .scroll-bottom-btn {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .scroll-bottom-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .status-box {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e7f3ff;
+            border-left: 4px solid #007bff;
+            border-radius: 4px;
+            color: #004085;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Scrolling Text Validation Test</h1>
+        
+        <div class="scroll-container" id="scrollable-text">
+            <div class="text-content">
+                <p><strong>Paragraph 1:</strong> This is the first paragraph of the scrollable text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                
+                <p><strong>Paragraph 2:</strong> This is the second paragraph. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                
+                <p><strong>Paragraph 3:</strong> This is the third paragraph. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                
+                <p><strong>Paragraph 4:</strong> This is the fourth paragraph. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                
+                <p><strong>Paragraph 5:</strong> This is the fifth paragraph. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+                
+                <p><strong>Paragraph 6:</strong> This is the sixth paragraph. Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                
+                <p><strong>Paragraph 7:</strong> This is the seventh paragraph. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.</p>
+                
+                <p><strong>Paragraph 8:</strong> This is the eighth paragraph. Quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                
+                <p><strong>Paragraph 9:</strong> This is the ninth paragraph. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.</p>
+                
+                <p><strong>Paragraph 10:</strong> This is the tenth and final paragraph. End of scrollable content.</p>
+            </div>
+        </div>
+        
+        <div class="button-container">
+            <button class="scroll-top-btn" id="scroll-top-btn" onclick="scrollToTop()">Scroll to Top</button>
+            <button class="scroll-bottom-btn" id="scroll-bottom-btn" onclick="scrollToBottom()">Scroll to Bottom</button>
+        </div>
+        
+        <div class="status-box" id="status">
+            <strong>Status:</strong> <span id="status-text">Ready to scroll</span>
+        </div>
+    </div>
+    
+    <script>
+        function scrollToTop() {
+            const scrollContainer = document.getElementById('scrollable-text');
+            scrollContainer.scrollTop = 0;
+            updateStatus('Scrolled to top');
+        }
+        
+        function scrollToBottom() {
+            const scrollContainer = document.getElementById('scrollable-text');
+            scrollContainer.scrollTop = scrollContainer.scrollHeight;
+            updateStatus('Scrolled to bottom');
+        }
+        
+        function updateStatus(message) {
+            document.getElementById('status-text').textContent = message;
+        }
+        
+        // Monitor scroll position
+        document.getElementById('scrollable-text').addEventListener('scroll', function() {
+            const scrollPos = this.scrollTop;
+            const scrollHeight = this.scrollHeight - this.clientHeight;
+            const scrollPercent = Math.round((scrollPos / scrollHeight) * 100);
+            updateStatus(`Scroll position: ${scrollPos}px (${scrollPercent}%)`);
+        });
+    </script>
+</body>
+</html>
