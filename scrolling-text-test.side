@@ -1,0 +1,269 @@
+{
+  "id": "scrolling-text-test-suite",
+  "version": "2.0",
+  "name": "Scrolling Text Validation Tests",
+  "url": "http://localhost:5000",
+  "tests": [
+    {
+      "id": "test-scroll-to-bottom",
+      "name": "Test Scroll to Bottom",
+      "commands": [
+        {
+          "id": "1",
+          "comment": "Open the scrolling text page",
+          "command": "open",
+          "target": "/scrolling-text.html",
+          "value": ""
+        },
+        {
+          "id": "2",
+          "comment": "Verify scroll container is visible",
+          "command": "assertElementPresent",
+          "target": "id=scrollable-text",
+          "value": ""
+        },
+        {
+          "id": "3",
+          "comment": "Click Scroll to Bottom button",
+          "command": "click",
+          "target": "id=scroll-bottom-btn",
+          "value": ""
+        },
+        {
+          "id": "4",
+          "comment": "Wait for scroll animation to complete",
+          "command": "pause",
+          "target": "500",
+          "value": ""
+        },
+        {
+          "id": "5",
+          "comment": "Verify text scrolled to bottom",
+          "command": "executeScript",
+          "target": "var el = document.getElementById('scrollable-text'); return el.scrollTop >= el.scrollHeight - el.clientHeight - 10",
+          "value": "isAtBottom"
+        },
+        {
+          "id": "6",
+          "comment": "Verify status updated to bottom",
+          "command": "assertText",
+          "target": "id=status-text",
+          "value": "*Scrolled to bottom*"
+        }
+      ]
+    },
+    {
+      "id": "test-scroll-to-top",
+      "name": "Test Scroll to Top",
+      "commands": [
+        {
+          "id": "1",
+          "comment": "Open the scrolling text page",
+          "command": "open",
+          "target": "/scrolling-text.html",
+          "value": ""
+        },
+        {
+          "id": "2",
+          "comment": "Click Scroll to Bottom button first",
+          "command": "click",
+          "target": "id=scroll-bottom-btn",
+          "value": ""
+        },
+        {
+          "id": "3",
+          "comment": "Wait for scroll animation",
+          "command": "pause",
+          "target": "500",
+          "value": ""
+        },
+        {
+          "id": "4",
+          "comment": "Click Scroll to Top button",
+          "command": "click",
+          "target": "id=scroll-top-btn",
+          "value": ""
+        },
+        {
+          "id": "5",
+          "comment": "Wait for scroll animation",
+          "command": "pause",
+          "target": "500",
+          "value": ""
+        },
+        {
+          "id": "6",
+          "comment": "Verify status updated to top",
+          "command": "assertText",
+          "target": "id=status-text",
+          "value": "*Scrolled to top*"
+        }
+      ]
+    },
+    {
+      "id": "test-scroll-multiple-times",
+      "name": "Test Multiple Scroll Operations",
+      "commands": [
+        {
+          "id": "1",
+          "comment": "Open the scrolling text page",
+          "command": "open",
+          "target": "/scrolling-text.html",
+          "value": ""
+        },
+        {
+          "id": "2",
+          "comment": "Verify initial status",
+          "command": "assertText",
+          "target": "id=status-text",
+          "value": "Ready to scroll"
+        },
+        {
+          "id": "3",
+          "comment": "First scroll to bottom",
+          "command": "click",
+          "target": "id=scroll-bottom-btn",
+          "value": ""
+        },
+        {
+          "id": "4",
+          "comment": "Wait and pause",
+          "command": "pause",
+          "target": "300",
+          "value": ""
+        },
+        {
+          "id": "5",
+          "comment": "Verify at bottom",
+          "command": "assertText",
+          "target": "id=status-text",
+          "value": "*Scrolled to bottom*"
+        },
+        {
+          "id": "6",
+          "comment": "Scroll to top",
+          "command": "click",
+          "target": "id=scroll-top-btn",
+          "value": ""
+        },
+        {
+          "id": "7",
+          "comment": "Wait for animation",
+          "command": "pause",
+          "target": "300",
+          "value": ""
+        },
+        {
+          "id": "8",
+          "comment": "Verify at top",
+          "command": "assertText",
+          "target": "id=status-text",
+          "value": "*Scrolled to top*"
+        },
+        {
+          "id": "9",
+          "comment": "Scroll to bottom again",
+          "command": "click",
+          "target": "id=scroll-bottom-btn",
+          "value": ""
+        },
+        {
+          "id": "10",
+          "comment": "Final verification",
+          "command": "assertText",
+          "target": "id=status-text",
+          "value": "*Scrolled to bottom*"
+        }
+      ]
+    },
+    {
+      "id": "test-scroll-content-visibility",
+      "name": "Test Content Visibility During Scroll",
+      "commands": [
+        {
+          "id": "1",
+          "comment": "Open the scrolling text page",
+          "command": "open",
+          "target": "/scrolling-text.html",
+          "value": ""
+        },
+        {
+          "id": "2",
+          "comment": "Verify Paragraph 1 is visible initially",
+          "command": "assertText",
+          "target": "css=.text-content p:nth-child(1)",
+          "value": "*Paragraph 1:*"
+        },
+        {
+          "id": "3",
+          "comment": "Scroll to bottom",
+          "command": "click",
+          "target": "id=scroll-bottom-btn",
+          "value": ""
+        },
+        {
+          "id": "4",
+          "comment": "Wait for scroll",
+          "command": "pause",
+          "target": "500",
+          "value": ""
+        },
+        {
+          "id": "5",
+          "comment": "Verify final paragraph is visible",
+          "command": "assertText",
+          "target": "css=.text-content p:nth-child(10)",
+          "value": "*Paragraph 10:*"
+        }
+      ]
+    },
+    {
+      "id": "test-scroll-button-visibility",
+      "name": "Test Scroll Buttons Are Visible and Clickable",
+      "commands": [
+        {
+          "id": "1",
+          "comment": "Open the scrolling text page",
+          "command": "open",
+          "target": "/scrolling-text.html",
+          "value": ""
+        },
+        {
+          "id": "2",
+          "comment": "Verify Scroll to Top button is present",
+          "command": "assertElementPresent",
+          "target": "id=scroll-top-btn",
+          "value": ""
+        },
+        {
+          "id": "3",
+          "comment": "Verify Scroll to Bottom button is present",
+          "command": "assertElementPresent",
+          "target": "id=scroll-bottom-btn",
+          "value": ""
+        },
+        {
+          "id": "4",
+          "comment": "Verify Scroll to Top button is visible",
+          "command": "assertVisible",
+          "target": "id=scroll-top-btn",
+          "value": ""
+        },
+        {
+          "id": "5",
+          "comment": "Verify Scroll to Bottom button is visible",
+          "command": "assertVisible",
+          "target": "id=scroll-bottom-btn",
+          "value": ""
+        },
+        {
+          "id": "6",
+          "comment": "Verify status box is present",
+          "command": "assertElementPresent",
+          "target": "id=status",
+          "value": ""
+        }
+      ]
+    }
+  ]
+}
